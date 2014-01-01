@@ -1,0 +1,7 @@
+Manifest-Version: 1.0
+Implementation-Title: PhantomJS Driver (GhostDriver)
+Implementation-Version: 1.1.0
+Gradle-Version: 1.10
+Main-Class: org.openqa.selenium.phantomjs.PhantomJSDriver
+Created-By: Ivan De Marino (https://github.com/detro)
+
