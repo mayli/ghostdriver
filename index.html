@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <title>Ghostdriver by detro</title>
+  </head>
+
+  <body>
+    <header>
+      <div class="inner">
+        <h1>Ghostdriver</h1>
+        <h2>Ghost Driver is an implementation of the Remote WebDriver Wire protocol, using PhantomJS as back-end</h2>
+        <a href="https://github.com/detro/ghostdriver" class="button"><small>View project on</small>GitHub</a>
+      </div>
+    </header>
+
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <h1>
+<a name="ghost-driver" class="anchor" href="#ghost-driver"><span class="octicon octicon-link"></span></a>Ghost Driver</h1>
+
+<p>Ghost Driver is a pure JavaScript implementation of the
+<a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol">WebDriver Wire Protocol</a>
+for <a href="http://phantomjs.org/">PhantomJS</a>.
+It's a Remote WebDriver that uses PhantomJS as back-end.</p>
+
+<p><strong>GhostDriver is designed to be integral part of PhantomJS itself, but it's developed in isolation and progress is tracked
+by this Repository.</strong></p>
+
+<ul>
+<li>Current <em>GhostDriver</em> stable version:
+see <a href="https://github.com/detro/ghostdriver/releases">releases</a>
+</li>
+<li>Current <em>PhantomJS-integrated</em> version is <code>"1.0.4"</code>:
+contained in PhantomJS <code>"1.9.2"</code>
+</li>
+<li>Current <em>PhantomJSDriver Java bindings</em> stable version: see
+<a href="http://mvnrepository.com/artifact/com.github.detro.ghostdriver/phantomjsdriver">Maven</a>
+</li>
+</ul><p>For more info, please take a look at the <a href="https://github.com/detro/ghostdriver/blob/master/CHANGELOG.md">changelog</a>.</p>
+
+<p>The project was created and is lead by <a href="https://github.com/detro">Ivan De Marino</a>.</p>
+
+<h2>
+<a name="setup" class="anchor" href="#setup"><span class="octicon octicon-link"></span></a>Setup</h2>
+
+<ul>
+<li>Download latest stable PhantomJS from <a href="http://phantomjs.org/download.html">here</a>
+</li>
+<li>Selenium version <code>"&gt;= 2.33.0</code>"</li>
+</ul><p><strong>THAT'S IT!!</strong> Because of latest stable GhostDriver being embedded in PhantomJS,
+you shouldn't need anything else to get started.</p>
+
+<h2>
+<a name="register-ghostdriver-with-a-selenium-grid-hub" class="anchor" href="#register-ghostdriver-with-a-selenium-grid-hub"><span class="octicon octicon-link"></span></a>Register GhostDriver with a Selenium Grid hub</h2>
+
+<ol>
+<li>Launch the grid server, which listens on 4444 by default: <code>java -jar /path/to/selenium-server-standalone-&lt;SELENIUM VERSION&gt;.jar -role hub</code>
+</li>
+<li>Register with the hub: <code>phantomjs --webdriver=8080 --webdriver-selenium-grid-hub=http://127.0.0.1:4444</code>
+</li>
+<li>Now you can use your normal webdriver client with <code>http://127.0.0.1:4444</code> and just request <code>browserName: phantomjs</code>
+</li>
+</ol><h2>
+<a name="java-bindings" class="anchor" href="#java-bindings"><span class="octicon octicon-link"></span></a>(Java) Bindings</h2>
+
+<p>This project provides WebDriver bindings for Java under the name <em>PhantomJSDriver</em>.
+<a href="http://cdn.ivandemarino.me/phantomjsdriver-javadoc/index.html">Here is the JavaDoc</a>.</p>
+
+<p>Bindings for other languages (C#, Python, Ruby, ...) are developed and maintained
+under the same name within the <a href="http://docs.seleniumhq.org/docs/">Selenium project</a> itself.</p>
+
+<h3>
+<a name="include-java-bindings-in-your-maven-project" class="anchor" href="#include-java-bindings-in-your-maven-project"><span class="octicon octicon-link"></span></a>Include Java Bindings in your Maven project</h3>
+
+<p>Just add the following to your <code>pom.xml</code>:</p>
+
+<div class="highlight highlight-xml"><pre><span class="nt">&lt;dependency&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>com.github.detro.ghostdriver<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>phantomjsdriver<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;version&gt;</span>LATEST_VERSION_HERE<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+</pre></div>
+
+<h3>
+<a name="include-java-bindings-in-your-gradle-project" class="anchor" href="#include-java-bindings-in-your-gradle-project"><span class="octicon octicon-link"></span></a>Include Java Bindings in your Gradle project</h3>
+
+<p>Just add the following to your <code>build.gradle</code>:</p>
+
+<pre lang="gradle"><code>dependencies {
+    ...
+    testCompile "com.github.detro.ghostdriver:phantomjsdriver:1.0.4"
+    ...
+}
+</code></pre>
+
+<h3>
+<a name="alternative-how-to-use-it-via-remotewebdriver" class="anchor" href="#alternative-how-to-use-it-via-remotewebdriver"><span class="octicon octicon-link"></span></a>Alternative: how to use it via <code>RemoteWebDriver</code>
+</h3>
+
+<p>Launching PhantomJS in Remote WebDriver mode it's simple:</p>
+
+<div class="highlight highlight-bash"><pre><span class="nv">$ </span>phantomjs --webdriver<span class="o">=</span>PORT
+</pre></div>
+
+<p>Once started, you can use any <code>RemoteWebDriver</code> implementation to send commands to it. I advice to take a look to the
+<code>/test</code> directory for examples.</p>
+
+<h2>
+<a name="faq" class="anchor" href="#faq"><span class="octicon octicon-link"></span></a>F.A.Q.</h2>
+
+<h3>
+<a name="what-extra-webdriver-capabilities-ghostdriver-offers" class="anchor" href="#what-extra-webdriver-capabilities-ghostdriver-offers"><span class="octicon octicon-link"></span></a>What extra WebDriver <code>capabilities</code> GhostDriver offers?</h3>
+
+<ul>
+<li>GhostDriver extra Capabilities
+
+<ul>
+<li>
+<code>phantomjs.page.settings.SETTING = VALUE</code> - Configure <code>page.settings</code>
+on PhantomJS internal page objects (<em>windows</em> in WebDriver context)
+(see <a href="https://github.com/ariya/phantomjs/wiki/API-Reference-WebPage#wiki-webpage-settings">reference</a>)</li>
+<li>
+<code>phantomjs.page.customHeaders.HEADER = VALUE</code> - Add extra HTTP Headers
+when loading a URL
+(see <a href="https://github.com/ariya/phantomjs/wiki/API-Reference-WebPage#wiki-webpage-customHeaders">reference</a>)</li>
+</ul>
+</li>
+<li>PhantomJSDriver (Java-binding) Capabilities
+
+<ul>
+<li>
+<code>phantomjs.binary.path</code> - Specify path to PhantomJS executable to use</li>
+<li>
+<code>phantomjs.ghostdriver.path</code> - Specify path to GhostDriver <code>main/src.js</code>
+script to use; allows to use a different version of GhostDriver then the one
+embed in PhantomJS</li>
+<li>
+<code>phantomjs.cli.args</code> - Specify command line arguments to pass to the
+PhantomJS executable</li>
+<li>
+<code>phantomjs.ghostdriver.cli.args</code> - Specify command line argument to pass to
+GhostDriver (works only in tandem with <code>phantomjs.ghostdriver.path</code>)</li>
+</ul>
+</li>
+</ul><h2>
+<a name="want-to-help-read-on" class="anchor" href="#want-to-help-read-on"><span class="octicon octicon-link"></span></a>Want to help? Read on!</h2>
+
+<h3>
+<a name="run-validation-the-tests" class="anchor" href="#run-validation-the-tests"><span class="octicon octicon-link"></span></a>Run validation the tests</h3>
+
+<p>Here I show how to clone this repo and kick start the (Java) tests. You need
+<a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">Java SDK</a>
+to run them (I tested it with Java 7, but should work with Java 6 too).</p>
+
+<ol>
+<li><code>git clone https://github.com/detro/ghostdriver.git</code></li>
+<li>Configure <code>phantomjs_exec_path</code> inside <code>ghostdriver/test/config.ini</code> to point at the build of PhantomJS you just did</li>
+<li><code>cd ghostdriver/test/java; ./gradlew test</code></li>
+</ol><h4>
+<a name="alternative-run-ghostdriver-yourself-and-launch-tests-against-that-instance" class="anchor" href="#alternative-run-ghostdriver-yourself-and-launch-tests-against-that-instance"><span class="octicon octicon-link"></span></a>Alternative: Run GhostDriver yourself and launch tests against that instance</h4>
+
+<ol>
+<li><code>phantomjs --webdriver=PORT</code></li>
+<li>Configure <code>driver</code> inside <code>ghostdriver/test/config.ini</code> to point at the URL <code>http://localhost:PORT</code>
+</li>
+<li><code>cd ghostdriver/test/java; ./gradlew test</code></li>
+</ol><h3>
+<a name="project-directory-structure" class="anchor" href="#project-directory-structure"><span class="octicon octicon-link"></span></a>Project Directory Structure</h3>
+
+<p>Here follows the output of the <code>tree -hd -L 3</code> command, trimmed of files and "build directories":</p>
+
+<div class="highlight highlight-bash"><pre>.
+├── <span class="o">[</span> 102<span class="o">]</span>  binding
+│   └── <span class="o">[</span> 510<span class="o">]</span>  java
+│       ├── <span class="o">[</span> 204<span class="o">]</span>  build
+│       ├── <span class="o">[</span> 136<span class="o">]</span>  gradle
+│       ├── <span class="o">[</span> 884<span class="o">]</span>  jars            &lt;--- JARs containing Binding, related Source and related JavaDoc
+│       └── <span class="o">[</span> 102<span class="o">]</span>  src             &lt;--- Java Binding Source
+├── <span class="o">[</span> 442<span class="o">]</span>  src                     &lt;--- GhostDriver JavaScript core <span class="nb">source</span>
+│   ├── <span class="o">[</span> 306<span class="o">]</span>  request_handlers    &lt;--- JavaScript <span class="s2">"classes/functions"</span> that handle HTTP Requests
+│   └── <span class="o">[</span> 204<span class="o">]</span>  third_party         &lt;--- Third party/utility code
+│       └── <span class="o">[</span>2.0K<span class="o">]</span>  webdriver-atoms &lt;--- WebDriver Atoms, automatically imported from the Selenium project
+├── <span class="o">[</span> 204<span class="o">]</span>  <span class="nb">test</span>
+│   ├── <span class="o">[</span> 476<span class="o">]</span>  java                &lt;--- Java Tests
+│   │   ├── <span class="o">[</span> 136<span class="o">]</span>  gradle
+│   │   ├── <span class="o">[</span> 136<span class="o">]</span>  out
+│   │   └── <span class="o">[</span> 102<span class="o">]</span>  src
+│   ├── <span class="o">[</span> 238<span class="o">]</span>  python              &lt;--- Python Tests
+│   │   └── <span class="o">[</span> 102<span class="o">]</span>  utils
+│   └── <span class="o">[</span> 340<span class="o">]</span>  testcase-issue_240
+└── <span class="o">[</span> 238<span class="o">]</span>  tools                   &lt;--- Tools <span class="o">(</span>import/export<span class="o">)</span>
+    └── <span class="o">[</span> 136<span class="o">]</span>  atoms_build_dir
+
+20 directories
+</pre></div>
+
+<h3>
+<a name="webdriver-atoms" class="anchor" href="#webdriver-atoms"><span class="octicon octicon-link"></span></a>WebDriver Atoms</h3>
+
+<p>Being GhostDriver a WebDriver implementation, it embeds the standard/default WebDriver Atoms to operate inside open
+webpages. In the specific, the Atoms cover scenarios where the "native" PhantomJS <code>require('webpage')</code> don't stretch.</p>
+
+<p>Documentation about how those work can be found <a href="http://code.google.com/p/selenium/wiki/AutomationAtoms">here</a>
+and <a href="http://www.aosabook.org/en/selenium.html">here</a>.</p>
+
+<p>How are those Atoms making their way into GhostDriver? If you look inside the <code>/tools</code> directory you can find a bash
+script: <code>/tools/import_atoms.sh</code>. That script accepts the path to a Selenium local repo, runs the
+<a href="http://code.google.com/p/selenium/wiki/CrazyFunBuild">CrazyFunBuild</a> to produce the compressed/minified Atoms,
+grabs those and copies them over to the <code>/src/third_party/webdriver-atoms</code> directory.</p>
+
+<p>The Atoms original source lives inside the Selenium repo in the subtree of <code>/javascript</code>. To understand how the build
+works, you need to spend a bit of time reading about
+<a href="http://code.google.com/p/selenium/wiki/CrazyFunBuild">CrazyFunBuild</a>: worth your time if you want to contribute to
+GhostDriver (or any WebDriver, as a matter of fact).</p>
+
+<p>One thing it's important to mention, is that CrazyFunBuild relies on the content of <code>build.desc</code> file to understand
+what and how to build it. Those files define what exactly is built and what it depends on. In the case of the Atoms,
+the word "build" means "run Google Closure Compiler over a set of files and compress functions into Atoms".
+The definition of the Atoms that GhostDriver uses lives at <code>/tools/atoms_build_dir/build.desc</code>.</p>
+
+<p>Let's take this small portion of our <code>build.desc</code>:</p>
+
+<pre><code>js_deps(name = "deps",
+  srcs = "*.js",
+  deps = ["//javascript/atoms:deps",
+          "//javascript/webdriver/atoms:deps"])
+
+js_fragment(name = "get_element_from_cache",
+  module = "bot.inject.cache",
+  function = "bot.inject.cache.getElement",
+  deps = [ "//javascript/atoms:deps" ])
+
+js_deps(name = "build_atoms",
+  deps = [
+    ...
+    "//javascript/webdriver/atoms:execute_script",
+    ...
+  ]
+</code></pre>
+
+<p>The first part (<code>js_deps(name = "deps"...</code>) declares what are the dependency of this <code>build.desc</code>: with that CrazyFunBuild knows
+what to build before fulfilling our build.</p>
+
+<p>The second part (<code>js_fragment(...</code>) defines an Atom: the <code>get_element_from_cache</code> is going to be the name of
+an Atom to build; it can be found in the module <code>bot.inject.cache</code> and is realised by the function named
+<code>bot.inject.cache.getElement</code>.</p>
+
+<p>The third part (<code>js_deps(name = "build_atoms"...</code>) is a list of the Atoms (either defined by something like the second
+part or in one of the files we declared as dependency) that we want to build.</p>
+
+<p>If you reached this stage in understanding the Atoms, you are ready to go further by yourself.</p>
+
+<h3>
+<a name="contributions-andor-bug-report" class="anchor" href="#contributions-andor-bug-report"><span class="octicon octicon-link"></span></a>Contributions and/or Bug Report</h3>
+
+<p>You can contribute by testing GhostDriver, reporting bugs and issues, or submitting Pull Requests.
+Any <strong>help is welcome</strong>, but bear in mind the following base principles:</p>
+
+<ul>
+<li>Issue reporting requires a reproducible example, otherwise will most probably be <strong>closed without warning</strong>
+</li>
+<li>Squash your commits by theme: I prefer a clean, readable log</li>
+<li>Maintain consistency with the code-style you are surrounded by</li>
+<li>If you are going to make a big, substantial change, let's discuss it first</li>
+<li>I <strong>HATE</strong> CoffeeScript: assume I'm going to laugh off any "contribution" that contains such <em>aberrating crap</em>!</li>
+<li>Open Source is NOT a democracy (and I mean it!)</li>
+</ul><h2>
+<a name="license" class="anchor" href="#license"><span class="octicon octicon-link"></span></a>License</h2>
+
+<p>GhostDriver is distributed under <a href="http://www.opensource.org/licenses/BSD-2-Clause">BSD License</a>.</p>
+
+<h2>
+<a name="release-names" class="anchor" href="#release-names"><span class="octicon octicon-link"></span></a>Release names</h2>
+
+<p>See <a href="http://en.wikipedia.org/wiki/List_of_ghosts">here</a>.</p>
+        </section>
+
+        <aside id="sidebar">
+          <a href="https://github.com/detro/ghostdriver/zipball/master" class="button">
+            <small>Download</small>
+            .zip file
+          </a>
+          <a href="https://github.com/detro/ghostdriver/tarball/master" class="button">
+            <small>Download</small>
+            .tar.gz file
+          </a>
+
+          <p class="repo-owner"><a href="https://github.com/detro/ghostdriver"></a> is maintained by <a href="https://github.com/detro">detro</a>.</p>
+
+          <p>This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
+        </aside>
+      </div>
+    </div>
+
+  
+  </body>
+</html>
